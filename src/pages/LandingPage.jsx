@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Activity, 
   Lock, 
@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 
 export default function LandingPage() {
+  const [activeImage, setActiveImage] = useState(null);
   return (
     <main>
       {/* Hero Section */}
@@ -255,35 +256,47 @@ export default function LandingPage() {
           {/* Screenshot Interface Grid */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
             {/* Screenshot 1 */}
-            <div className="glass-panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', textAlign: 'center' }}>
+            <div className="glass-panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', textAlign: 'center', cursor: 'pointer' }} onClick={() => setActiveImage(`${import.meta.env.BASE_URL}logHistory.jpg`)}>
               <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border-color)' }}>
                 <img src={`${import.meta.env.BASE_URL}logHistory.jpg`} alt="Log History Screen" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
-              <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-main)' }}>Meal & Symptom History</span>
+              <div>
+                <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-main)' }}>Meal & Symptom History</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginTop: '2px' }}>Click to enlarge</span>
+              </div>
             </div>
 
             {/* Screenshot 2 */}
-            <div className="glass-panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', textAlign: 'center' }}>
+            <div className="glass-panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', textAlign: 'center', cursor: 'pointer' }} onClick={() => setActiveImage(`${import.meta.env.BASE_URL}logInsightMenu.jpg`)}>
               <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border-color)' }}>
                 <img src={`${import.meta.env.BASE_URL}logInsightMenu.jpg`} alt="Insights Screen" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
-              <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-main)' }}>Trigger Correlation Insights</span>
+              <div>
+                <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-main)' }}>Trigger Correlation Insights</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginTop: '2px' }}>Click to enlarge</span>
+              </div>
             </div>
 
             {/* Screenshot 3 */}
-            <div className="glass-panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', textAlign: 'center' }}>
+            <div className="glass-panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', textAlign: 'center', cursor: 'pointer' }} onClick={() => setActiveImage(`${import.meta.env.BASE_URL}logTrendMenu.jpg`)}>
               <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border-color)' }}>
                 <img src={`${import.meta.env.BASE_URL}logTrendMenu.jpg`} alt="Trends Screen" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
-              <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-main)' }}>Offline Regression Trends</span>
+              <div>
+                <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-main)' }}>Offline Regression Trends</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginTop: '2px' }}>Click to enlarge</span>
+              </div>
             </div>
 
             {/* Screenshot 4 */}
-            <div className="glass-panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', textAlign: 'center' }}>
+            <div className="glass-panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', textAlign: 'center', cursor: 'pointer' }} onClick={() => setActiveImage(`${import.meta.env.BASE_URL}logSettingsMenu.jpg`)}>
               <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border-color)' }}>
                 <img src={`${import.meta.env.BASE_URL}logSettingsMenu.jpg`} alt="Settings Screen" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
-              <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-main)' }}>Ingredient Watchlist & Config</span>
+              <div>
+                <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-main)' }}>Ingredient Watchlist & Config</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginTop: '2px' }}>Click to enlarge</span>
+              </div>
             </div>
           </div>
         </div>
@@ -393,6 +406,59 @@ export default function LandingPage() {
           </a>
         </div>
       </section>
+      {/* Lightbox Modal */}
+      {activeImage && (
+        <div 
+          onClick={() => setActiveImage(null)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(8, 12, 20, 0.85)',
+            backdropFilter: 'blur(10px)',
+            zIndex: 2000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'zoom-out',
+            animation: 'fadeIn 0.2s ease-out'
+          }}
+        >
+          <button 
+            onClick={() => setActiveImage(null)}
+            style={{
+              position: 'absolute',
+              top: '24px',
+              right: '24px',
+              background: 'none',
+              border: 'none',
+              color: '#fff',
+              fontSize: '2.5rem',
+              cursor: 'pointer',
+              padding: '8px',
+              lineHeight: 1
+            }}
+          >
+            &times;
+          </button>
+          <img 
+            src={activeImage} 
+            alt="Enlarged app screenshot" 
+            style={{ 
+              maxWidth: '90%', 
+              maxHeight: '85vh', 
+              borderRadius: '20px', 
+              boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              objectFit: 'contain',
+              cursor: 'default'
+            }} 
+            onClick={(e) => e.stopPropagation()} 
+          />
+        </div>
+      )}
     </main>
   );
 }
